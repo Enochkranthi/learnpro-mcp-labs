@@ -43,12 +43,12 @@ Pick one host you use and add this entry (the format from the lesson):
 
 | Host | Where it goes | Note |
 |---|---|---|
-| Claude Desktop | `claude_desktop_config.json` | restart the app afterwards |
+| Claude Desktop | `claude_desktop_config.json` (Settings > Developer > Edit Config) | quit the app completely and reopen it afterwards |
 | Cursor | `.cursor/mcp.json` (project) or `~/.cursor/mcp.json` (all projects) | same format |
 | VS Code | `.vscode/mcp.json` | use the key `servers` instead of `mcpServers`, and add `"type": "stdio"` to the entry |
 | Claude Code | run `claude mcp add time -- uvx mcp-server-time` | writes the entry for you |
 
-Restart or reload the host if it does not pick the server up.
+Restart or reload the host if it does not pick the server up. Hosts usually read the file only at start-up.
 
 ## Step 2 — Use it in a chat
 
@@ -66,11 +66,23 @@ Start the Inspector:
 npx @modelcontextprotocol/inspector
 ```
 
-In the page that opens, choose a local command server, enter `uvx` as the command and `mcp-server-time` as the arguments, and connect. Then:
+In the page that opens, choose a local command (stdio) server, enter `uvx` as the command and `mcp-server-time` as the arguments, and connect.
+
+Shortcut: put the server command after the Inspector command and it connects for you:
+
+```
+npx @modelcontextprotocol/inspector uvx mcp-server-time
+```
+
+Then:
 
 1. List the tools. You should see `get_current_time` and `convert_time`.
 2. Call `get_current_time` with `timezone` set to `Asia/Kolkata`.
 3. Call `convert_time` with `source_timezone` `Europe/London`, `time` `09:00`, and `target_timezone` `Asia/Tokyo`.
+
+What you should see: each result is a `content` list holding one text piece (the Module 3 shape), and the text is a small block of JSON. For the `convert_time` call, London 09:00 becomes **17:00** in Tokyo while London is on summer time (BST) and **18:00** when it is on winter time (GMT). The result also has `isError` set to `false`.
+
+> The Time server speaks an older version of MCP that begins with a setup step. That is fine here: the Inspector and current hosts handle both versions.
 
 ## Step 4 — Run the install checklist
 
