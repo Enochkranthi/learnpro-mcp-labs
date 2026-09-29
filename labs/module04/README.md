@@ -82,7 +82,7 @@ Then:
 
 What you should see: each result is a `content` list holding one text piece (the Module 3 shape), and the text is a small block of JSON. For the `convert_time` call, London 09:00 becomes **17:00** in Tokyo while London is on summer time (BST) and **18:00** when it is on winter time (GMT). The result also has `isError` set to `false`.
 
-> The Time server speaks an older version of MCP that begins with a setup step. That is fine here: the Inspector and current hosts handle both versions.
+> The Time server speaks an older version of MCP that begins with a setup step. That is fine here: the Inspector connects to it, and hosts are expected to keep supporting earlier versions.
 
 ## Step 4 — Run the install checklist
 
